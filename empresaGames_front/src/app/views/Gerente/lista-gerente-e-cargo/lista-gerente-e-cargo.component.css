@@ -1,0 +1,42 @@
+p{
+  margin:0
+}
+
+.container{
+  padding: 5px 150px;
+}
+
+.modal{
+  background-color: lightgray!important;
+}
+
+.search {
+  width: 40%;
+  outline: none;
+  margin: 0;
+  border: 1px solid green;
+  border-left: none;
+  height: 38px;
+  border-top-right-radius: .25rem;
+  border-bottom-right-radius: .25rem;
+
+}
+
+.search-container {
+  width: 100%;
+
+}
+
+.search-icon {
+  background-color: white;
+  border-top: 1px solid green;
+  border-left: 1px solid green;
+  border-bottom: 1px solid green;
+  height: 38px;
+  width: 40px;
+  padding: 5px;
+  border-top-left-radius: .25rem;
+  border-bottom-left-radius: .25rem;
+  padding-left: 10px;
+
+}

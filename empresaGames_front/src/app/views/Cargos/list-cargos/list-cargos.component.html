@@ -1,0 +1,77 @@
+<app-header></app-header>
+<a class='text-success d-flex justify-content-center mt-3' routerLink="/home">Voltar para Home</a>
+<h3 class="text-success fw-bold mt-3 d-flex justify-content-center">Lista de Projetos</h3>
+<a class='text-success fw-bold d-flex justify-content-center mt-3' routerLink="/cargo/add">Adicionar Projeto</a>
+<div class="container">
+  <div class='d-flex align-items-center search-container justify-content-center mb-4'>
+    <div class='search-icon'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-search" viewBox="0 0 16 16">
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+      </svg></div>
+    <input type="text" class="search" [(ngModel)]="filter" autocomplete="off"
+      placeholder="Pesquise por Nome, Cidade e Projeto">
+  </div>
+  <div style="height: 300px; overflow: auto;">
+    <table class="table table-success table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Funcionários do Cargo</th>
+          <th scope="col">Tasks do Projeto</th>
+          <th scope="col">Líder do Projeto</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cargo | filter: filter">
+          <th scope="row">{{item.id_cargo}}</th>
+          <td>{{item.car_nome}}</td>
+          <td>{{item.car_atribuicao}}</td>
+          <td><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green"
+              class="bi bi-person-fill" viewBox="0 0 16 16"
+              routerLink="/funcionariosCargo/list/{{item.id_cargo}}/{{item.car_nome}}">
+              <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+            </svg>
+          </td>
+          <td>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green" class="bi bi-ui-checks" viewBox="0 0 16 16" routerLink="/cargo/task/{{item.id_cargo}}">
+              <path d="M7 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zM2 1a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2zm0 8a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2H2zm.854-3.646a.5.5 0 0 1-.708 0l-1-1a.5.5 0 1 1 .708-.708l.646.647 1.646-1.647a.5.5 0 1 1 .708.708l-2 2zm0 8a.5.5 0 0 1-.708 0l-1-1a.5.5 0 0 1 .708-.708l.646.647 1.646-1.647a.5.5 0 0 1 .708.708l-2 2zM7 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5v-1zm0-5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 8a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z"/>
+            </svg>
+          </td>
+          <td *ngIf="item.ger_nome != null">{{item.ger_nome}}</td>
+          <td *ngIf="item.ger_nome == null"><img src='assets/img/SemGerente.png'></td>
+          <td>
+            <a routerLink="/cargo/edit/{{item.id_cargo}}" style="color:green">Editar</a><br>
+            <a style="color:red; text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop2" (click)="mostrarModal(item)">Deletar</a><br>
+            <a routerLink="/gerente-do-cargo/{{item.id_cargo}}">Adicionar/Alterar Líder</a>
+          </td>
+          <div *ngIf="modal" class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Deleção de Projeto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Tem certeza que gostaria deletar o Projeto?</p>
+                  <p><span class="fw-bold mx-2">Nome:</span>{{nomeModal}}</p>
+                  <p><span class="fw-bold mx-2">Descrição:</span>{{atribuicaoModal}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Não Deletar</button>
+                  <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"
+                    (click)="deletarCargo()">Deletar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

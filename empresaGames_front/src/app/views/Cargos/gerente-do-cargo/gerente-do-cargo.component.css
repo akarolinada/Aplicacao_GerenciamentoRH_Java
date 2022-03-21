@@ -1,0 +1,41 @@
+input{
+  border:none;
+  border-bottom: 3px solid #188754;
+  background-color: lightgray!important;
+  outline: 0;
+  box-shadow: none;
+
+}
+
+input:focus{
+  border:none;
+  border-bottom: 3px solid #188754;
+  background-color: lightgray;
+  outline: 0;
+  box-shadow: none;
+}
+
+.form-select{
+  border:none;
+  border-bottom: 3px solid #188754;
+  background-color: lightgray;
+  outline: 0;
+  box-shadow: none;
+}
+
+.col{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  height: 505px;
+}
+
+img{
+  width: 150px;
+  height: 150px;
+  border: solid 3px #188754;
+}
+
+
+

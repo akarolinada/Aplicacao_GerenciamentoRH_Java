@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="container d-flex flex-column align-items-center">
+
+  <a class="text-success mt-3" routerLink="/home">Voltar para Home</a>
+  <a class="text-success m-3" routerLink="/funcionarios/contracheque/{{id_funcionario}}">Voltar para Lista de Contracheques do Funcionario</a>
+  <h3 class="text-success fw-bold mt-3">Editar Contracheque</h3>
+
+  <form class="form mt-3" #form="ngForm">
+    <div class="mb-3">
+      <label for="cc_descricao" class="form-label text-success">Descrição do contracheque:</label>
+      <input type="text" class="form-control" id="cc_descricao" name="cc_descricao" [(ngModel)]="contracheque.cc_descricao"
+        placeholder="Digite a descrição do contracheque" required minlength="3" #descricao="ngModel">
+        <div *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)" class="alert">
+          <div *ngIf="descricao.errors?.['required']" class="feedback">
+            Descrição é obrigatória.
+          </div>
+          <div *ngIf="descricao.errors?.['minlength']" class="feedback">
+            A descrição requer, no mínimo, 3 letras.
+          </div>
+        </div>
+    </div>
+    <div class="mb-4">
+      <label for="cc_data_emissao" class="form-label text-success">Data da emissão do contracheque:</label>
+      <input type="date" class="form-control" id="cc_data_emissao" name="cc_data_emissao"
+        [(ngModel)]="contracheque.cc_data_emissao" required #data="ngModel">
+        <div *ngIf="data.invalid && (data.dirty || data.touched)" class="alert">
+          <div *ngIf="data.errors?.['required']" class="feedback">
+            Data é obrigatória.
+          </div>
+        </div>
+    </div>
+    <div class="mb-4">
+      <label for="cc_valor" class="form-label text-success">Valor do contracheque:</label>
+      <input type="text" class="form-control" id="cc_valor" name="cc_valor"
+        [(ngModel)]="contracheque.cc_valor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" required #valor="ngModel">
+        <div *ngIf="valor.invalid && (valor.dirty || valor.touched)" class="alert">
+          <div *ngIf="valor.errors?.['required']" class="feedback">
+            Valor é obrigatório.
+          </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-success" (click)="editarContracheque()" [disabled]="!form.valid">Editar</button>
+      <button class="btn btn-success mx-3" type="reset">Limpar</button>
+    </div>
+  </form>
+</div>
+

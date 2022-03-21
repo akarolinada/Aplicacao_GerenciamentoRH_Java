@@ -1,0 +1,93 @@
+<app-header></app-header>
+<a class='text-success d-flex justify-content-center mt-3' routerLink="/home">Voltar para Home</a>
+<a class='text-success d-flex justify-content-center mt-3' routerLink="/funcionarios/list">Voltar para Lista de Funcionários</a>
+<h3 class="text-success fw-bold mt-3 d-flex justify-content-center">Lista de Contracheques do Funcionário</h3>
+<a *ngIf="funcionario.func_vinculo == 1" class='text-success fw-bold d-flex justify-content-center mt-3' routerLink="/funcionario/contracheque/cadastro/{{id_funcionario}}">Adicionar Contracheque</a>
+<div class="container">
+  <div class='d-flex align-items-center search-container justify-content-center mb-4'>
+    <div class='search-icon'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-search" viewBox="0 0 16 16">
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+      </svg></div>
+    <input type="text" class="search" [(ngModel)]="filter" autocomplete="off"
+      placeholder="Pesquise por Nome, Cidade e Projeto">
+  </div>
+  <div style="height: 300px; overflow: auto;">
+    <table class="table table-success table-striped">
+      <caption>Lista de Contracheques</caption>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Data da Emissão</th>
+          <th scope="col">Valor</th>
+          <th scope="col">Status</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of contracheques | filter: filter">
+          <th scope="row">{{item.id_contracheque}}</th>
+          <td>{{item.cc_descricao}}</td>
+          <td>{{item.cc_data_emissao | date:"dd/MM/yyyy"}}</td>
+          <td>{{item.cc_valor | currency:"BRL"}}</td>
+          <td *ngIf="item.cc_status == 'PENDENTE'"><img src='assets/img/Pendente.png'></td>
+          <td *ngIf="item.cc_status == 'ENTREGUE'"><img src='assets/img/Entregue.png'></td>
+          <td>
+            <p routerLink="/funcionario/contracheque/edit/{{item.id_contracheque}}/{{id_funcionario}}" style="color:green; text-decoration: underline; cursor: pointer;">Editar</p>
+            <p (click)="mostrarModal(item)" style="color:red; text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop">Deletar</p>
+            <p *ngIf="item.cc_status == 'PENDENTE'" (click)="mostrarModal2(item)" style="color:blue; text-decoration: underline; cursor: pointer;"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Entregar</p>
+          </td>
+          <div *ngIf="modal" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Deleção de Contracheque</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Tem certeza que gostaria deletar o contracheque?</p>
+                  <p><span class="fw-bold mx-2">Descrição:</span>{{descricaoModal}}</p>
+                  <p><span class="fw-bold mx-2">Data:</span>{{dataModal | date:"dd/MM/yyyy"}}</p>
+                  <p><span class="fw-bold mx-2">Valor:</span>{{valorModal | currency:"BRL"}}</p>
+                  <p><span class="fw-bold mx-2">Status:</span>{{statusModal}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Não Deletar</button>
+                  <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"
+                    (click)="deletarContracheque()">Deletar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="modal2" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Entrega de Contracheque</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Tem certeza que gostaria marcar esse contracheque como entregue?</p>
+                  <p><span class="fw-bold mx-2">Descrição:</span>{{descricaoModal}}</p>
+                  <p><span class="fw-bold mx-2">Data:</span>{{dataModal | date:"dd/MM/yyyy"}}</p>
+                  <p><span class="fw-bold mx-2">Valor:</span>{{valorModal | currency:"BRL"}}</p>
+                  <p><span class="fw-bold mx-2">Status:</span>{{statusModal}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Não Entregar</button>
+                  <button type="button" class="btn btn-sm btn-warning" data-bs-dismiss="modal"
+                    (click)="entregarContracheque()">Entregar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

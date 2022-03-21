@@ -1,0 +1,122 @@
+<app-header></app-header>
+<a class='text-success d-flex justify-content-center mt-3' routerLink="/home">Voltar para Home</a>
+<a class='text-success d-flex justify-content-center mt-3' routerLink="/cargo/list">Voltar para Lista de Projetos</a>
+<h3 class="text-success fw-bold mt-3 d-flex justify-content-center">Lista de Taks do Projeto</h3>
+<a class='text-success fw-bold d-flex justify-content-center mt-3' routerLink="/cargo/task/cadastro/{{id_cargo}}">Adicionar Task</a>
+<div class="container">
+  <div class='d-flex align-items-center search-container justify-content-center mb-4'>
+    <div class='search-icon'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-search" viewBox="0 0 16 16">
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+      </svg></div>
+    <input type="text" class="search" [(ngModel)]="filter" autocomplete="off"
+      placeholder="Pesquise por Nome, Cidade e Projeto">
+  </div>
+  <div style="height: 300px; overflow: auto;">
+    <table class="table table-success table-striped">
+      <caption>Lista de Tasks</caption>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Título</th>
+          <th scope="col">Descrição</th>
+          <th scope="col">Status</th>
+          <th scope="col">Gerenciamento</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of tasks | filter:filter">
+          <th scope="row">{{item.id_task}}</th>
+          <td>{{item.task_titulo}}</td>
+          <td>{{item.task_descricao}}</td>
+          <td *ngIf="item.task_status == 'PENDENTE'"><img src='assets/img/Pendente.png'></td>
+          <td *ngIf="item.task_status == 'EM_ANDAMENTO'"><img src='assets/img/EmAndamento.png'></td>
+          <td *ngIf="item.task_status == 'CONCLUIDO'"><img src='assets/img/Concluido.png'></td>
+          <td>
+            <p *ngIf="item.task_status == 'PENDENTE'" (click)="mostrarModal2(item)"
+              style="color:yellow; text-decoration: underline; cursor: pointer;" data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop2">Em Andamento</p>
+            <p *ngIf="item.task_status == 'PENDENTE' || item.task_status == 'EM_ANDAMENTO'"
+              (click)="mostrarModal3(item)" style="color:green; text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop3">Concluido</p>
+            <img *ngIf="item.task_status == 'CONCLUIDO'" src='assets/img/Concluido.png'>
+            <div *ngIf="modal2" class="modal fade" id="staticBackdrop2" data-bs-backdrop="static"
+              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Marcar task como EM ANDAMENTO</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Tem certeza que gostaria marcar essa task como EM ANDAMENTO?</p>
+                    <p><span class="fw-bold mx-2">Título:</span>{{tituloModal}}</p>
+                    <p><span class="fw-bold mx-2">Descrição:</span>{{descricaoModal}}</p>
+                    <p><span class="fw-bold mx-2">Status:</span>{{statusModal}}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-warning" data-bs-dismiss="modal"
+                      (click)="marcarEmAndamento()">Em Andamento</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="modal3" class="modal fade" id="staticBackdrop3" data-bs-backdrop="static"
+              data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Marcar task como CONCLUIDA</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Tem certeza que gostaria marcar essa task como CONCLUIDA?</p>
+                    <p><span class="fw-bold mx-2">Título:</span>{{tituloModal}}</p>
+                    <p><span class="fw-bold mx-2">Descrição:</span>{{descricaoModal}}</p>
+                    <p><span class="fw-bold mx-2">Status:</span>{{statusModal}}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-sm btn-warning" data-bs-dismiss="modal"
+                      (click)="marcarConcluida()">Concluida</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <td>
+            <p routerLink="/cargo/task/edit/{{item.id_task}}/{{id_cargo}}"
+              style="color:blue; text-decoration: underline; cursor: pointer;">Editar</p>
+            <p (click)="mostrarModal(item)" style="color:red; text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop">Deletar</p>
+
+            <div *ngIf="modal" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+              tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Deleção da Task</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Tem certeza que gostaria deletar a task?</p>
+                    <p><span class="fw-bold mx-2">Título:</span>{{tituloModal}}</p>
+                    <p><span class="fw-bold mx-2">Descrição:</span>{{descricaoModal}}</p>
+                    <p><span class="fw-bold mx-2">Status:</span>{{statusModal}}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Não Deletar</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"
+                      (click)="deletarTask()">Deletar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

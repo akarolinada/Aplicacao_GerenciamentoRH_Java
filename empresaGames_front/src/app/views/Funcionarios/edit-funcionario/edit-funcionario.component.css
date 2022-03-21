@@ -1,0 +1,26 @@
+input{
+  border-bottom: 3px solid #188754;
+  background-color: lightgray;
+}
+
+input:focus{
+  border:none;
+  border-bottom: 3px solid #188754;
+  background-color: lightgray;
+  outline: 0;
+  box-shadow: none;
+}
+
+.container{
+  width: 30%;
+}
+
+.ng-invalid.ng-touched:not(form){
+  border-bottom: 2px solid red;
+}
+
+.feedback{
+  font-size: small;
+  color:red;
+  margin: 0;
+}

@@ -1,0 +1,42 @@
+<app-header></app-header>
+<div class="container d-flex flex-column align-items-center">
+
+  <a class="text-success mt-3" routerLink="/home">Voltar para Home</a>
+  <a class="text-success m-3" routerLink="/cargo/task/{{id_cargo}}">Voltar para Lista de Tasks do Projeto</a>
+  <h3 class="text-success fw-bold mt-3">Adicionar Task</h3>
+
+  <form class="form mt-3" #form="ngForm">
+    <div class="mb-3">
+      <label for="task_titulo" class="form-label text-success">Título da task:</label>
+      <input type="text" class="form-control" id="task_titulo" name="task_titulo" [(ngModel)]="task.task_titulo"
+        placeholder="Digite o título da task" required minlength="3" #titulo="ngModel">
+        <div *ngIf="titulo.invalid && (titulo.dirty || titulo.touched)" class="alert">
+          <div *ngIf="titulo.errors?.['required']" class="feedback">
+            Título é obrigatório.
+          </div>
+          <div *ngIf="titulo.errors?.['minlength']" class="feedback">
+            O título requer, no mínimo, 3 letras.
+          </div>
+        </div>
+    </div>
+    <div class="mb-4">
+      <label for="task_descricao" class="form-label text-success">Descrição da task:</label>
+      <input type="text" class="form-control" id="task_descricao" name="task_descricao"
+        [(ngModel)]="task.task_descricao" placeholder="Digite a descrição da task" required minlength="3" #descricao="ngModel">
+        <div *ngIf="descricao.invalid && (descricao.dirty || descricao.touched)" class="alert">
+          <div *ngIf="descricao.errors?.['required']" class="feedback">
+            Descrição é obrigatório.
+          </div>
+          <div *ngIf="descricao.errors?.['minlength']" class="feedback">
+            A descrição requer, no mínimo, 3 letras.
+          </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-success" (click)="adicionarTask()" [disabled]="!form.valid">Cadastrar</button>
+      <button class="btn btn-success mx-3" type="reset">Limpar</button>
+    </div>
+  </form>
+</div>
+
+

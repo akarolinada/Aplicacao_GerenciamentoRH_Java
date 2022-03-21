@@ -1,0 +1,39 @@
+<div class="container d-flex flex-column align-items-center mt-5">
+
+  <a class="text-success mt-3" routerLink="/home">Voltar para Home</a>
+  <a class="text-success m-3" routerLink="/funcionarios/list">Voltar para Lista de Funcionários</a>
+  <h3 class="text-success fw-bold mt-3">Adicionar Funcionário</h3>
+
+  <form class="form mt-3" #form="ngForm">
+    <div class="mb-3">
+      <label for="func_nome" class="form-label text-success">Nome do Funcionário</label>
+      <input type="text" class="form-control" id="func_nome" name="func_nome" [(ngModel)]="funcionario.func_nome"
+        placeholder="Digite o nome do funcionário" required minlength="3" #nome="ngModel">
+        <div *ngIf="nome.invalid && (nome.dirty || nome.touched)" class="alert">
+          <div *ngIf="nome.errors?.['required']" class="feedback">
+            Nome é obrigatório.
+          </div>
+          <div *ngIf="nome.errors?.['minlength']" class="feedback">
+            O nome requer, no mínimo, 3 letras.
+          </div>
+        </div>
+    </div>
+    <div class="mb-4">
+      <label for="func_cidade" class="form-label text-success">Cidade do Funcionário</label>
+      <input type="email" class="form-control" id="func_cidade" name="func_cidade" [(ngModel)]="funcionario.func_cidade"
+         placeholder="Digite a cidade deste funcionário" required minlength="3" #cidade="ngModel">
+         <div *ngIf="cidade.invalid && (cidade.dirty || cidade.touched)" class="alert">
+          <div *ngIf="cidade.errors?.['required']" class="feedback">
+            Cidade é obrigatório.
+          </div>
+          <div *ngIf="cidade.errors?.['minlength']" class="feedback">
+            A cidade requer, no mínimo, 3 letras.
+          </div>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center">
+      <button class="btn btn-success" (click)="cadastrarFuncionario()" [disabled]="form.invalid">Cadastrar</button>
+      <button class="btn btn-success mx-3" type="reset">Limpar</button>
+    </div>
+  </form>
+</div>

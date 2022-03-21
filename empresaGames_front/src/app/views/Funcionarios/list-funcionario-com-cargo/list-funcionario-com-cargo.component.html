@@ -1,0 +1,86 @@
+<a class='text-success d-flex justify-content-center mt-3' routerLink="/home">Voltar para Home</a>
+<h3 class="text-success fw-bold mt-3 d-flex justify-content-center">Lista de Funcionários</h3>
+<a class='text-success fw-bold d-flex justify-content-center mt-3' routerLink="/funcionarios/add">Adicionar
+  Funcionário</a>
+<div class="container">
+  <div class='d-flex align-items-center search-container justify-content-center mb-4'>
+    <div class='search-icon'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-search" viewBox="0 0 16 16">
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+      </svg></div>
+    <input type="text" class="search" [(ngModel)]="filter" autocomplete="off"
+      placeholder="Pesquise por Nome, Cidade e Projeto">
+  </div>
+  <div style="height: 300px; overflow: auto;">
+    <table class="table table-success table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Cidade</th>
+          <th scope="col">Projeto</th>
+          <th scope="col">Contra-Cheques</th>
+          <th scope="col">Vinculo</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of funcionario | filter:filter">
+          <th scope="row">{{item.id_funcionario}}</th>
+          <td>{{item.func_nome}}</td>
+          <td>{{item.func_cidade}}</td>
+          <td *ngIf="item.car_nome != null">{{item.car_nome}}</td>
+          <td *ngIf="item.car_nome == null && item.func_vinculo == 0"><img src="/assets/img/Desvinculado.png"></td>
+          <td *ngIf="item.car_nome == null && item.func_vinculo == 1"><img src="/assets/img/SemCargo.png"></td>
+          <td><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green"
+              class="bi bi-receipt-cutoff" viewBox="0 0 16 16" routerLink="/funcionarios/contracheque/{{item.id_funcionario}}">
+              <path
+                d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zM11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z" />
+              <path
+                d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293 2.354.646zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118l.137-.274z" />
+            </svg>
+          </td>
+          <td *ngIf="item.func_vinculo == 0"><img src="assets/img/Desvinculado.png"></td>
+          <td *ngIf="item.func_vinculo == 1"><img src="assets/img/Vinculado.png"></td>
+          <td>
+            <p *ngIf="item.func_vinculo == 1" style="color:green; text-decoration: underline; cursor: pointer;"
+              routerLink="/funcionarios/edit/{{item.id_funcionario}}">Editar</p>
+            <p *ngIf="item.func_vinculo == 1" style="color:red; text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="mostrarModal(item)">Desvincular</p>
+            <p *ngIf="item.func_vinculo == 0"
+              style="color:rgba(146, 146, 65, 0.986); text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="mostrarModal(item)">Vincular</p>
+            <p *ngIf="item.func_vinculo == 1" style="color:blue; text-decoration: underline; cursor: pointer;"
+              routerLink="/cargo-do-funcionario/{{item.id_funcionario}}/{{item.id_cargo}}">Adicionar/Alterar Projeto</p>
+            <p *ngIf="item.func_vinculo == 1" style="color:palevioletred; text-decoration: underline; cursor: pointer;" (click)="promoverFuncionario(item)">Promover</p>
+          </td>
+          <div *ngIf="modal" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Desvinculação de Funcionário</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Tem certeza que gostaria desvincular o funcionário da empresa?</p>
+                  <p><span class="fw-bold mx-2">Nome:</span>{{nomeVinculo}}</p>
+                  <p><span class="fw-bold mx-2">Cidade:</span>{{cidadeVinculo}}</p>
+                  <p><span class="fw-bold mx-2">Cargo:</span>{{cargoVinculo}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Voltar</button>
+                  <button *ngIf="botaoVinculo == 1" type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal"
+                    (click)="desvincularFuncionario()">Desvincular</button>
+                  <button *ngIf="botaoVinculo == 0" type="button" class="btn btn-sm btn-warning" data-bs-dismiss="modal"
+                    (click)="vincularFuncionario()">Vincular</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

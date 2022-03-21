@@ -1,0 +1,108 @@
+<app-header></app-header>
+<a class='text-success d-flex justify-content-center mt-3' routerLink="/home">Voltar para Home</a>
+<h3 class="text-success fw-bold mt-3 d-flex justify-content-center">Lista de Líderes</h3>
+<a class='text-success fw-bold d-flex justify-content-center mt-3' routerLink="/gerentes/add">Adicionar Líder</a>
+<div class="container">
+  <div class='d-flex align-items-center search-container justify-content-center mb-4'>
+    <div class='search-icon'><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+        class="bi bi-search" viewBox="0 0 16 16">
+        <path
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+      </svg></div>
+    <input type="text" class="search" [(ngModel)]="filter" autocomplete="off"
+      placeholder="Pesquise por Nome, Cidade e Projeto">
+  </div>
+  <div style="height: 300px; overflow: auto;">
+    <table class="table table-success table-striped">
+      <caption>Lista de Líderes</caption>
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Cidade</th>
+          <th scope="col">Idade</th>
+          <th scope="col">Foto</th>
+          <th scope="col">Contracheque</th>
+          <th scope="col">Cargo</th>
+          <th scope="col">Vinculo</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of gerente | filter:filter">
+          <th scope="row">{{item.id_gerente}}</th>
+          <td>{{item.ger_nome}}</td>
+          <td>{{item.ger_cidade}}</td>
+          <td>{{item.ger_idade}}</td>
+          <td><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="green" class="bi bi-image" viewBox="0 0 16 16" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="mostrarModal2(item)">
+            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+            <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+          </svg>
+          <div *ngIf="modal2" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Foto do Líder</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center">
+                  <img *ngIf="fotoModal !=''" src='{{fotoModal}}' style="width: 400px">
+                  <p *ngIf="fotoModal ==''">Este Líder não tem foto!</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="green"
+              class="bi bi-receipt-cutoff" viewBox="0 0 16 16" routerLink="/gerente/contracheque/{{item.id_gerente}}">
+              <path
+                d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zM11.5 4a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1zm0 2a.5.5 0 0 0 0 1h1a.5.5 0 0 0 0-1h-1z" />
+              <path
+                d="M2.354.646a.5.5 0 0 0-.801.13l-.5 1A.5.5 0 0 0 1 2v13H.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1H15V2a.5.5 0 0 0-.053-.224l-.5-1a.5.5 0 0 0-.8-.13L13 1.293l-.646-.647a.5.5 0 0 0-.708 0L11 1.293l-.646-.647a.5.5 0 0 0-.708 0L9 1.293 8.354.646a.5.5 0 0 0-.708 0L7 1.293 6.354.646a.5.5 0 0 0-.708 0L5 1.293 4.354.646a.5.5 0 0 0-.708 0L3 1.293 2.354.646zm-.217 1.198.51.51a.5.5 0 0 0 .707 0L4 1.707l.646.647a.5.5 0 0 0 .708 0L6 1.707l.646.647a.5.5 0 0 0 .708 0L8 1.707l.646.647a.5.5 0 0 0 .708 0L10 1.707l.646.647a.5.5 0 0 0 .708 0L12 1.707l.646.647a.5.5 0 0 0 .708 0l.509-.51.137.274V15H2V2.118l.137-.274z" />
+            </svg>
+        </td>
+          <td *ngIf="item.car_nome != null">{{item.car_nome}}</td>
+          <td *ngIf="item.car_nome == null && item.ger_vinculo == 0"><img src="assets/img/Desvinculado.png"></td>
+          <td *ngIf="item.car_nome == null && item.ger_vinculo == 1"><img src="assets/img/SemCargo.png"></td>
+          <td *ngIf="item.ger_vinculo == 0"><img src="assets/img/Desvinculado.png"></td>
+          <td *ngIf="item.ger_vinculo == 1"><img src="assets/img/Vinculado.png"></td>
+          <td>
+            <p *ngIf="item.ger_vinculo == 1" style="color:green; text-decoration: underline; cursor: pointer;" routerLink="/gerentes/edit/{{item.id_gerente}}/{{item.id_cargo}}/{{item.ger_nome}}">Editar</p>
+            <p *ngIf="item.ger_vinculo == 1" style="color:red; text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="mostrarModal(item)">Desvincular</p>
+            <p *ngIf="item.ger_vinculo == 0" style="color:rgba(146, 146, 65, 0.986); text-decoration: underline; cursor: pointer;"
+              data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="mostrarModal(item)">Vincular</p>
+            <p *ngIf="item.ger_vinculo == 1" style="color:blue; text-decoration: underline; cursor: pointer;" routerLink="/cargo-do-gerente/{{item.id_gerente}}/{{item.id_cargo}}">Adicionar/Alterar Projeto</p>
+          </td>
+          <div *ngIf="modal" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Desvinculação de Gerente</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <p>Tem certeza que gostaria desvincular o gerente da empresa?</p>
+                  <p><span class="fw-bold mx-2">Nome:</span>{{nomeVinculo}}</p>
+                  <p><span class="fw-bold mx-2">Cidade:</span>{{cidadeVinculo}}</p>
+                  <p><span class="fw-bold mx-2">Idade:</span>{{idadeVinculo}}</p>
+                  <p><span class="fw-bold mx-2">Cargo:</span>{{cargoVinculo}}</p>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Voltar</button>
+                  <button *ngIf="botaoVinculo == 1" type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal" (click)="desvincularGerente()">Desvincular</button>
+                  <button *ngIf="botaoVinculo == 0" type="button" class="btn btn-sm btn-warning" data-bs-dismiss="modal" (click)="vincularGerente()">Vincular</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+

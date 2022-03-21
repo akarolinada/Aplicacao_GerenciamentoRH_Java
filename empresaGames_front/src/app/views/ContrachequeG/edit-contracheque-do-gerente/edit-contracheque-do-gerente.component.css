@@ -1,0 +1,12 @@
+input{
+  border-bottom: 3px solid #188754;
+  background-color: lightgray;
+}
+
+input:focus{
+  border:none;
+  border-bottom: 3px solid #188754;
+  background-color: lightgray;
+  outline: 0;
+  box-shadow: none;
+}

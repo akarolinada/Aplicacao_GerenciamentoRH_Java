@@ -1,0 +1,74 @@
+<app-header></app-header>
+<div class="container">
+  <div class="row">
+
+    <div class="col">
+
+      <div class="infos">
+        <h3 class="text-success mb-5">Informações do Projeto</h3>
+        <div class="mb-3">
+          <label for="car_nome" class="form-label text-success">Nome do Projeto</label>
+          <input type="text" class="form-control" id="car_nome" name="car_nome" [(ngModel)]="cargo.car_nome" readonly>
+        </div>
+        <div class="mb-4">
+          <label for="car_atribuicao" class="form-label text-success">Descrição do Projeto</label>
+          <input type="text" class="form-control" id="car_atribuicao" name="car_atribuicao" [(ngModel)]="cargo.car_atribuicao" readonly>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button class="btn btn-sm btn-success" routerLink="/cargo/list">Voltar</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="col">
+
+      <div class="infos">
+        <h3 class="text-success mb-5">Líder de {{cargo.car_nome}}</h3>
+        <div class="mb-2">
+          <label for="ger_nome" class="form-label text-success">Nome do Líder</label>
+          <input type="text" class="form-control" name="ger_nome" [(ngModel)]="gerente.ger_nome" readonly>
+        </div>
+        <div class="mb-2 d-flex flex-column align-items-center">
+          <label for="ger_foto" class="form-label text-success">Foto do Líder</label>
+          <div class="foto"><img src ='{{gerente.ger_foto}}'></div>
+        </div>
+        <form>
+          <div class="mb-2">
+            <label for="gerenteSemCargoEscolhido" class="form-label text-success">Alterar Líder deste Projeto</label>
+
+            <select class="form-select" [(ngModel)]="gerenteSemCargoEscolhido" name="gerenteSemCargoEscolhido"
+            (ngModelChange)="mostrarGerente()">
+              <option *ngFor="let item of gerentesSemCargo" [ngValue]="item">{{item.ger_nome}}</option>
+            </select>
+
+          </div>
+          <div class="d-flex justify-content-center mt-4">
+            <button class="btn btn-sm btn-success" (click)="atribuirGerente()">Salvar</button>
+            <button class="btn btn-sm btn-success mx-3" type="reset">Limpar</button>
+            <button class="btn btn-sm btn-success mx-5" data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="mostrarModal(gerente)">Deixar Projeto sem Líder</button>
+            <div *ngIf="modal" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Deleção de Líder</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Tem certeza que gostaria de remover o Líder do Projeto?</p>
+                    <p><span class="fw-bold mx-2">Nome:</span>{{nomeModal}}</p>
+                    <p><span class="fw-bold mx-2">Cidade:</span>{{cidadeModal}}</p>
+                    <p><span class="fw-bold mx-2">Idade:</span>{{idadeModal}}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-success" data-bs-dismiss="modal">Não Remover Gerente</button>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-dismiss="modal" (click)="deixarCargoSemGerente()">Remover Líder</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
