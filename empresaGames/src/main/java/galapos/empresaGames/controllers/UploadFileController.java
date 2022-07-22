@@ -33,7 +33,7 @@ public class UploadFileController {
 		String fileName = nome;
 		
 		
-		String uploadDir = "D:/soulcode/SoulCodeAcademy/JAVA/eclipse-workspace/Spring/Projeto empresa na ideia da prof/empresaGames_front/src/assets/img_db";
+		String uploadDir = "C:/Users/aname/OneDrive/Documentos/Programação/APPS/Aplicacao_GerenciamentoRH_Java/empresaGames_front/src/assets/img_db";
 		String nomeMaisCaminho = "assets/img_db/" + nome;
 		
 		Gerente gerente = gerenteService.salvarFoto(id_gerente, nomeMaisCaminho);

@@ -47,8 +47,8 @@
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-center">
-                  <img *ngIf="fotoModal !=''" src='{{fotoModal}}' style="width: 400px">
-                  <p *ngIf="fotoModal ==''">Este Líder não tem foto!</p>
+                  <img *ngIf="fotoModal != null" src='{{fotoModal}}' style="width: 400px">
+                  <p *ngIf="fotoModal == null">Este Líder não tem foto!</p>
                 </div>
               </div>
             </div>

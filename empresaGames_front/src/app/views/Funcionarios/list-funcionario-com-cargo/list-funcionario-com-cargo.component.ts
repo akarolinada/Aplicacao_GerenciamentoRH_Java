@@ -106,8 +106,9 @@ export class ListFuncionarioComCargoComponent implements OnInit {
     this.gerente.ger_nome = funcionario.func_nome
     this.gerente.ger_cidade = funcionario.func_cidade
     this.gerente.ger_vinculo = funcionario.func_vinculo
+    this.gerente.id_cargo = funcionario.id_cargo
     this.gerenteService.cadastrarGerente(this.gerente).subscribe(res => {
-      alert("Funcionario inserido!")
+      console.log("Funcionario inserido!")
       this.gerenteService.buscaFuncionarioPromovido().subscribe(res => {
         console.log(res);
 
@@ -130,22 +131,15 @@ export class ListFuncionarioComCargoComponent implements OnInit {
             console.log(contrachequeg);
 
             this.contrachequegService.adicionarContracheque(res.id_gerente, contrachequeg).subscribe(res => {
-              alert("CC transferidos!")
-              this.funcionarioService.deletarFuncionario(funcionario.id_funcionario).subscribe(res => {
-                console.log("Funcionario promovido!");
-
-              })
+              console.log("CC transferidos!")
             })
           })
         })
       })
-
-
+      this.funcionarioService.deletarFuncionario(funcionario.id_funcionario).subscribe(res => {
+        alert("Funcionario promovido!");
+        this.router.navigate(['/gerentes/list'])
+      })
     })
-
-
-
-
-
   }
 }

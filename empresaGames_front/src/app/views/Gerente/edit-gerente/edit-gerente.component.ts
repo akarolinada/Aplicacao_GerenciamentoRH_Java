@@ -83,6 +83,8 @@ export class EditGerenteComponent implements OnInit {
       })
 
       alert("Foto do Líder editada!")
+
+      this.router.navigate(['/gerentes/list'])
     }
   }
 }

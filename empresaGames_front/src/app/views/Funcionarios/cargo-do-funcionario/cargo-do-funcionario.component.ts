@@ -44,7 +44,7 @@ export class CargoDoFuncionarioComponent implements OnInit {
     this.buscarCargoDoFuncionario();
     this.buscarTodosCargos()
     if(this.id_cargo == 0){
-      alert("Este funcionário não tem cargo!")
+      alert("Este funcionário não tem projeto!")
     }
   }
 
@@ -73,9 +73,9 @@ export class CargoDoFuncionarioComponent implements OnInit {
 
   atribuirCargoAoFuncionario(){
     this.funcionarioService.atribuirCargoAoFuncionario(this.id_funcionario, this.cargo).subscribe({
-      next: () => {alert("Novo Cargo atribuido com sucesso!")
+      next: () => {alert("Novo projeto atribuido com sucesso!")
                    this.router.navigate(['/funcionarios/list'])},
-      error: () => {alert("Erro ao atribuir novo cargo ao funcionpario!")
+      error: () => {alert("Erro ao atribuir novo projeto ao funcionpario!")
                     this.router.navigate(['/funcionarios/list'])},
       complete: () => {console.log("Complete!");
       }
@@ -94,7 +94,7 @@ export class CargoDoFuncionarioComponent implements OnInit {
       .deixarFuncionarioSemCargo(this.funcionario, this.id_funcionario).subscribe({
         complete: () => {alert('Cargo Removido!');
                         this.router.navigate(['/funcionarios/list'])},
-        error: () => {alert('Erro ao remover Cargo!')},
+        error: () => {alert('Erro ao remover projeto!')},
         next: () => {console.log('Complete!')},
       });
   }

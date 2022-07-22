@@ -76,8 +76,8 @@ export class CargoDoGerenteComponent implements OnInit {
         }
 
         cargosSemGerente.id_cargo=e[0]
-        cargosSemGerente.car_nome=e[1]
-        cargosSemGerente.car_atribuicao=e[2]
+        cargosSemGerente.car_nome=e[2]
+        cargosSemGerente.car_atribuicao=e[1]
 
         this.cargoSemGerente.push(cargosSemGerente)
         console.log(this.cargoSemGerente);
